@@ -1,15 +1,19 @@
 #include <iostream>
 #include <unistd.h>
 #include <term.h>
+#include <stdlib.h>
+#include <time.h>
 using namespace std;
 
 char square[10] = {'o','1','2','3','4','5','6','7','8','9'};
 int checkwin();
 void board();
 void ClearScreen();
+int CPU_player();
 
 int main()
 {
+	srand (time(NULL));
 	int player = 1,i,choice;
 	char mark;
 	do
@@ -17,6 +21,11 @@ int main()
 		board();
 		player=(player%2)?1:2;
 		cout << "Player " << player << ", enter a number (0 for exit):  ";
+		if( player == 2 )
+		{
+			choice = CPU_player();
+		}
+		else
 		cin >> choice;
 		mark=(player == 1) ? 'X' : 'O';
 		if( choice == 0 )
@@ -126,3 +135,9 @@ void ClearScreen()
 
   putp( tigetstr( "clear" ) );
   }
+/********************CPU_player**************************************/
+int CPU_player()
+{
+	int cpu_player = 0;
+	return cpu_player = rand()%9 + 1;
+}

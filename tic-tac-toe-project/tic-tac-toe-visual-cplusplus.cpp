@@ -1,3 +1,9 @@
+/* 
+ * Tic Tac Toe game
+ * author: Karol Tabaka
+ * email: din_alt@poczta.onet.pl
+ * GNU GPL v.2 2017
+ */
 #include <iostream>
 #include <unistd.h>
 #include <term.h>
@@ -10,61 +16,40 @@ int checkwin();
 void board();
 void ClearScreen();
 int CPU_player();
+void game( bool CPU_player_on );
+void clear_board( char board[] );
 
 int main()
 {
+	bool is_cpu_player_on = false;
+	bool continue_game = true;
+	char answer = ' ';
 	srand (time(NULL));
-	int player = 1,i,choice;
-	char mark;
-	do
-	{
-		board();
-		player=(player%2)?1:2;
-		cout << "Player " << player << ", enter a number (0 for exit):  ";
-		if( player == 2 )
-		{
-			choice = CPU_player();
-		}
-		else
-		cin >> choice;
-		mark=(player == 1) ? 'X' : 'O';
-		if( choice == 0 )
-			break;
-		else if (choice == 1 && square[1] == '1')
-			square[1] = mark;
-		else if (choice == 2 && square[2] == '2')
-			square[2] = mark;
-		else if (choice == 3 && square[3] == '3')
-			square[3] = mark;
-		else if (choice == 4 && square[4] == '4')
-			square[4] = mark;
-		else if (choice == 5 && square[5] == '5')
-			square[5] = mark;
-		else if (choice == 6 && square[6] == '6')
-			square[6] = mark;
-		else if (choice == 7 && square[7] == '7')
-			square[7] = mark;
-		else if (choice == 8 && square[8] == '8')
-			square[8] = mark;
-		else if (choice == 9 && square[9] == '9')
-			square[9] = mark;
-		else
-		{
-			cout<<"Invalid move ";
-			player--;
-			cin.ignore();
-			cin.get();
-		}
-		i=checkwin();
-		player++;
-	}while(i==-1);
 	board();
-	if(i==1)
-		cout<<"==>\aPlayer "<<--player<<" win ";
-	else
-		cout<<"==>\aGame draw";
-	cin.ignore();
-	cin.get();
+	while(continue_game == true)
+	{
+		cout << "How many players will play? (1, 2 or q to quit)" << endl;
+		cin >> answer;
+		clear_board( square );
+		switch(answer)
+		{
+		case '1':
+			is_cpu_player_on = true;
+			game(is_cpu_player_on);
+			break;
+		case '2':
+			is_cpu_player_on = false;
+			game(is_cpu_player_on);
+			break;
+		case 'q':
+			continue_game = false;
+			break;
+		default:
+			cout << "Wrong choise, try again!" << endl;
+		}
+		//clear_board( square );
+	}
+		
 	return 0;
 }
 /*********************************************
@@ -120,7 +105,16 @@ void board()
 	cout << "  " << square[7] << "  |  " << square[8] << "  |  " << square[9] << endl;
 	cout << "     |     |     " << endl << endl;
 }
-
+/******************clear_board**************************************/
+void clear_board( char board[])
+{
+	string clear_up_board = "0123456789";
+	for( int i; i<10; i++)
+	{
+	board[i] = clear_up_board[i];
+	}
+}
+		
 /*******************************************************************
 				CLEAR SCREEN FUNCTION
 ********************************************************************/
@@ -139,5 +133,80 @@ void ClearScreen()
 int CPU_player()
 {
 	int cpu_player = 0;
-	return cpu_player = rand()%9 + 1;
+	if ( square[3] == '3' && (square[1] == square[2] || square[7] == square[5] || square[6] == square[9]))
+		return 3;
+	else if ( square[2] == '2' && (square[1] == square[3] || square[5] == square[8] ))
+		return 2;
+	else if ( square[1] == '1' && (square[2] == square[3] || square[5] == square[9] || square[4] == square[7] ))
+		return 1;
+	else if ( square[4] == '4' && (square[1] == square[7] || square[5] == square[6] ))
+		return 4;
+	else if ( square[5] == '5' && (square[4] == square[6] || square[1] == square[9] || square[2] == square[8] || square[3] == square[7] ))
+		return 5;
+	else if ( square[6] == '6' && (square[4] == square[5] || square[3] == square[9] ))
+		return 6;
+	else if ( square[7] == '7' && (square[1] == square[4] || square[3] == square[5] || square[8] == square[9] ))
+		return 7;
+	else if ( square[8] == '8' && (square[2] == square[5] || square[7] == square[9] ))
+		return 8;
+	else if ( square[9] == '9' && (square[1] == square[5] || square[7] == square[8] || square[3] == square[6] ))
+		return 9;
+	else
+		return cpu_player = rand()%9 + 1;
+}
+/*********************game*******************************************/
+void game( bool CPU_player_on )
+{
+	int player = 1,i,choice;
+	char mark;
+	do
+	{
+		board();
+		player=(player%2)?1:2;
+		cout << "Player " << player << ", enter a number (0 for exit):  ";
+		if( player == 2 && CPU_player_on == true )
+		{
+			choice = CPU_player();
+			cout << choice;
+		}
+		else
+		cin >> choice;
+		mark=(player == 1) ? 'X' : 'O';
+		if( choice == 0 )
+			break;
+		else if (choice == 1 && square[1] == '1')
+			square[1] = mark;
+		else if (choice == 2 && square[2] == '2')
+			square[2] = mark;
+		else if (choice == 3 && square[3] == '3')
+			square[3] = mark;
+		else if (choice == 4 && square[4] == '4')
+			square[4] = mark;
+		else if (choice == 5 && square[5] == '5')
+			square[5] = mark;
+		else if (choice == 6 && square[6] == '6')
+			square[6] = mark;
+		else if (choice == 7 && square[7] == '7')
+			square[7] = mark;
+		else if (choice == 8 && square[8] == '8')
+			square[8] = mark;
+		else if (choice == 9 && square[9] == '9')
+			square[9] = mark;
+		else
+		{
+			cout<<"Invalid move ";
+			player--;
+			cin.ignore();
+			cin.get();
+		}
+		i=checkwin();
+		player++;
+	}while(i==-1);
+	board();
+	if(i==1)
+		cout<<"==>\aPlayer "<<--player<<" win ";
+	else
+		cout<<"==>\aGame draw";
+	cin.ignore();
+	cin.get();
 }

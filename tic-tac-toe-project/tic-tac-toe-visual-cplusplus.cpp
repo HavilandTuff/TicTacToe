@@ -1,8 +1,11 @@
 /* 
  * Tic Tac Toe game
+ * Based on exercise from http://www.cppforschool.com/project/tic-tac-toe-project.html
+ * Added CPU player, clear screen for linux terminal and clear board function.
  * author: Karol Tabaka
  * email: din_alt@poczta.onet.pl
  * GNU GPL v.2 2017
+ * 
  */
 #include <iostream>
 #include <unistd.h>
@@ -23,15 +26,15 @@ int main()
 {
 	bool is_cpu_player_on = false;
 	bool continue_game = true;
-	char answer = ' ';
+	char number_of_players = ' ';
 	srand (time(NULL));
 	board();
 	while(continue_game == true)
 	{
 		cout << "How many players will play? (1, 2 or q to quit)" << endl;
-		cin >> answer;
+		cin >> number_of_players;
 		clear_board( square );
-		switch(answer)
+		switch(number_of_players)
 		{
 		case '1':
 			is_cpu_player_on = true;
@@ -47,7 +50,7 @@ int main()
 		default:
 			cout << "Wrong choise, try again!" << endl;
 		}
-		//clear_board( square );
+		
 	}
 		
 	return 0;

@@ -5,12 +5,10 @@ int checkwin();
 void board();
 int main()
 {
-    initscr(); //1
-    printw( "Hello World !!!" ); //2
+    initscr(); 
     board();
-  
-    getch(); //3
-    endwin(); //4
+    getch();
+    endwin();
     return 0;
 }
 
@@ -40,27 +38,35 @@ int checkwin()
 
 void board()
 {
-	/*
-	ClearScreen();
-	cout << "\n\n\tTic Tac Toe\n\n";
-	cout << "Player 1 (X)  -  Player 2 (O)" << endl << endl;
-	cout << endl;
-	cout << "     |     |     " << endl;
-	cout << "  " << square[1] << "  |  " << square[2] << "  |  " << square[3] << endl;
-	cout << "_____|_____|_____" << endl;
-	cout << "     |     |     " << endl;
-	cout << "  " << square[4] << "  |  " << square[5] << "  |  " << square[6] << endl;
-	cout << "_____|_____|_____" << endl;
-	cout << "     |     |     " << endl;
-	cout << "  " << square[7] << "  |  " << square[8] << "  |  " << square[9] << endl;
-	cout << "     |     |     " << endl << endl;
-	*/
-	int kolumny = 0;
-	int rzedy = 0;
-	char tekst[] = "Wyswietlany tekst!";
-	  getmaxyx( stdscr, rzedy, kolumny ); //1
-   
-   
-    //wyswietlanie tekstu
-    mvprintw( rzedy / 2,( kolumny / 2 ) -( sizeof( tekst ) / 2 ), tekst ); //2
+	int columns = 0;
+	int rows = 0;
+	char title[] = "Tic Tac Toe";
+	char info_line[] = "Player 1 (X)  -  Player 2 (O)";
+	char empty_line[] = "     |     |     ";
+	char data_line[] = "     |     |     ";
+	char bottom_line[] = "_____|_____|_____";
+	
+	
+	getmaxyx( stdscr, rows, columns ); 
+    mvprintw( rows / 2 -6,( columns / 2 ) -( sizeof( title ) / 2 ), title );
+    mvprintw( rows / 2 -5, ( columns / 2) - (sizeof( info_line ) / 2 ), info_line ); 
+    mvprintw( rows / 2 -3, ( columns / 2) - (sizeof( data_line ) / 2 ), data_line );
+    data_line[2] = square[1];
+    data_line[8] = square[2];
+    data_line[14] = square[3]; 
+    mvprintw( rows / 2 -2, ( columns / 2) - (sizeof( data_line ) / 2 ), data_line );
+    mvprintw( rows / 2 -1, ( columns / 2) - (sizeof( bottom_line ) / 2 ), bottom_line );
+    mvprintw( rows / 2 , ( columns / 2) - (sizeof( empty_line ) / 2 ), empty_line );
+    data_line[2] = square[4];
+    data_line[8] = square[5];
+    data_line[14] = square[6];
+    mvprintw( rows / 2 +1, ( columns / 2) - (sizeof( data_line ) / 2 ), data_line );
+    mvprintw( rows / 2 +2, ( columns / 2) - (sizeof( bottom_line ) / 2 ), bottom_line );
+    mvprintw( rows / 2 +3, ( columns / 2) - (sizeof( empty_line ) / 2 ), empty_line );
+    data_line[2] = square[7];
+    data_line[8] = square[8];
+    data_line[14] = square[9];
+    mvprintw( rows / 2 +4, ( columns / 2) - (sizeof( data_line ) / 2 ), data_line );
+    mvprintw( rows / 2 +5, ( columns / 2) - (sizeof( empty_line ) / 2 ), empty_line );
+    
 }
